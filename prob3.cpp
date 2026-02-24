@@ -4,11 +4,7 @@ using namespace std;
 
 bool isPrime(int n)
 {
-    if (n <= 1) return false;
-    if (n == 2) return true;
-    if (n % 2 == 0) return false;
-    
-    for (int tr = 2; tr < n / 2; tr++)
+    for (int tr = 2; tr <= n / 2; tr++)
         if ((n % tr ) == 0)
             return false;
     return true;
