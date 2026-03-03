@@ -11,8 +11,11 @@ Canvas::Canvas(int width, int height){
     Clear();
 }
 
-
-void SetPoint(int x, int y, char ch)
+void Canvas::SetPoint(int x, int y, char ch){
+    if(x >= 0 && x < width && y >= 0 && y < height){
+        matrix[x][y] = ch;
+    }
+}
 
 void Canvas::DrawLine(int x1, int y1, int x2, int y2, char ch){
     //punctul de start / stop
@@ -40,4 +43,16 @@ void Canvas::DrawLine(int x1, int y1, int x2, int y2, char ch){
             y1 += sy;
         }
     }
+}
+
+void Canvas::Print(){
+    for(int i = 0; i < width; i++, cout << endl)
+        for(int j=0;j<height;j++)
+            cout << matrix[i][j];
+}
+
+void Canvas::Clear(){
+    for(int i = 0;i< width; i++)
+        for(int j=0;j<height;j++)
+            matrix[i][j] = ' ';
 }
