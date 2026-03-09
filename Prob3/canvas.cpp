@@ -1,0 +1,54 @@
+#include "canvas.h"
+#include <bits/stdc++.h>
+
+// Constructorul
+Canvas::Canvas(int lines, int columns) : lines(lines), columns(columns) {
+    matrix = new char*[lines];
+    for (int i = 0; i < lines; ++i) {
+        matrix[i] = new char[columns];
+    }
+    clear();
+}
+
+// Destructorul (important pentru a nu avea memory leaks)
+Canvas::~Canvas() {
+    for (int i = 0; i < lines; ++i) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+}
+
+void Canvas::set_pixel(int x, int y, char value) {
+    if (x >= 0 && x < lines && y >= 0 && y < columns) {
+        matrix[x][y] = value;
+    }
+}
+
+void Canvas::set_pixels(int count, ...) {
+    va_list args;
+    va_start(args, count);
+    for (int i = 0; i < count; ++i) {
+        int x = va_arg(args, int);
+        int y = va_arg(args, int);
+        int val = va_arg(args, int); // char se promovează la int în variadice
+        set_pixel(x, y, (char)val);
+    }
+    va_end(args);
+}
+
+void Canvas::clear() {
+    for (int i = 0; i < lines; ++i) {
+        for (int j = 0; j < columns; ++j) {
+            matrix[i][j] = ' ';
+        }
+    }
+}
+
+void Canvas::print() const {
+    for (int i = 0; i < lines; ++i) {
+        for (int j = 0; j < columns; ++j) {
+            std::cout << matrix[i][j];
+        }
+        std::cout << "\n";
+    }
+}
