@@ -3,7 +3,9 @@
 
 using namespace std;
 
-Canvas::Canvas(int width, int height) : width(width), height(height) {
+Canvas::Canvas(int width, int height) {
+    this->width = width;  //salvam pentru print/clear
+    this->height = height;
     matrix = new char*[height];
     for (int i = 0; i < height; ++i) {
         matrix[i] = new char[width];
@@ -19,7 +21,7 @@ Canvas::~Canvas() {
 }
 
 void Canvas::SetPoint(int x, int y, char ch) {
-    if (x >= 0 && x < width && y >= 0 && y < height) {
+    if (x >= 0 && x < width && y >= 0 && y < height) { //x si y in matrice
         matrix[y][x] = ch;
     }
 }
@@ -32,7 +34,7 @@ void Canvas::Clear() {
     }
 }
 
-void Canvas::Print() {
+void Canvas::Print() { //afisarea
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             cout << matrix[i][j];
@@ -42,10 +44,10 @@ void Canvas::Print() {
 }
 
 void Canvas::DrawRect(int left, int top, int right, int bottom, char ch) {
-    DrawLine(left, top, right, top, ch);       // Sus
-    DrawLine(left, bottom, right, bottom, ch); // Jos
-    DrawLine(left, top, left, bottom, ch);    // Stânga
-    DrawLine(right, top, right, bottom, ch);  // Dreapta
+    DrawLine(left, top, right, top, ch);       // partea de sus
+    DrawLine(left, bottom, right, bottom, ch); // partea de jos
+    DrawLine(left, top, left, bottom, ch);    // partea stanga
+    DrawLine(right, top, right, bottom, ch);  // partea dreapta
 }
 
 void Canvas::FillRect(int left, int top, int right, int bottom, char ch) {
@@ -83,11 +85,13 @@ void Canvas::FillCircle(int x, int y, int ray, char ch) {
     }
 }
 
-// Algoritmul Bresenham pentru linii
+// brasenham pt linii
 void Canvas::DrawLine(int x1, int y1, int x2, int y2, char ch) {
+    //calculul directiei
     int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
     int dy = -abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
-    int err = dx + dy, e2;
+    //
+    int err = dx + dy, e2; //marja de eroare
 
     while (true) {
         SetPoint(x1, y1, ch);

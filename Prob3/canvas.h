@@ -8,7 +8,7 @@ private:
 
 public:
     Canvas(int lines, int columns);
-    ~Canvas(); // Destructor pentru a elibera memoria
+    ~Canvas(); // decs
 
     void set_pixel(int x, int y, char value);
     void set_pixels(int count, ...);

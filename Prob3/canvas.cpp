@@ -1,8 +1,9 @@
 #include "canvas.h"
 #include <bits/stdc++.h>
 
-// Constructorul
-Canvas::Canvas(int lines, int columns) : lines(lines), columns(columns) {
+Canvas::Canvas(int lines, int columns) {
+    this->lines = lines;  //salvam pentru print/clear
+    this->columns = columns;
     matrix = new char*[lines];
     for (int i = 0; i < lines; ++i) {
         matrix[i] = new char[columns];
@@ -10,7 +11,6 @@ Canvas::Canvas(int lines, int columns) : lines(lines), columns(columns) {
     clear();
 }
 
-// Destructorul (important pentru a nu avea memory leaks)
 Canvas::~Canvas() {
     for (int i = 0; i < lines; ++i) {
         delete[] matrix[i];
@@ -30,7 +30,7 @@ void Canvas::set_pixels(int count, ...) {
     for (int i = 0; i < count; ++i) {
         int x = va_arg(args, int);
         int y = va_arg(args, int);
-        int val = va_arg(args, int); // char se promovează la int în variadice
+        int val = va_arg(args, int);
         set_pixel(x, y, (char)val);
     }
     va_end(args);
