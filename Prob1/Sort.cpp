@@ -10,18 +10,16 @@ Sort::Sort(int elements_count, int minimum, int maximum)
     for(int i=0;i < elements_count; i++){
         this->elements[i] = minimum + (rand() % (maximum - minimum + 1));
     }
-    // rand() -> functie ce returneaza o valoare random
-	// pentru a putea avea un numar random intr-un anumit interval se poate folosi modulo (%)
-	// formula generala este: minimum + (rand() % (maximum - minimum + 1))
-	// https://www.geeksforgeeks.org/cpp/rand-and-srand-in-ccpp/
 }
 
-Sort(initializer_list<int> list)
+Sort::Sort(initializer_list<int> list)
 {
-	// list.size() -> returneaza nr de elemente din lista;
-	// list.begin() -> returneaza un pointer catre primul element din lista
-	// list.begin()[i] -> acceseaza elementul de pe pozitia i
-	// https://www.geeksforgeeks.org/cpp/std-initializer_list-in-cpp-11/
+	this->elements_count = (int)list.size();
+    this->elements = new int[this->elements_count];
+
+	for(int i=0; i < elements_count; i++){
+		
+	}
 }
 
 Sort::Sort(string list)
