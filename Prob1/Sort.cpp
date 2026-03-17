@@ -1,71 +1,132 @@
-#include <bits/stdc++.h>
 #include "Sort.h"
+#include <bits/stdc++.h>
 
 using namespace std;
 
+//generate random
 Sort::Sort(int elements_count, int minimum, int maximum)
 {
-	this->elements_count = elements_count;
-    this->elements = new int[elements_count];
-    for(int i=0;i < elements_count; i++){
-        this->elements[i] = minimum + (rand() % (maximum - minimum + 1));
+    count = elements_count;
+    elements = new int[count];
+    for (int i = 0; i < count; i++)
+        elements[i] = minimum + (rand() % (maximum - minimum + 1));
+}
+
+//initializam lista
+Sort::Sort(initializer_list<int> list)
+{
+    count = (int)list.size();
+    elements = new int[count];
+    for (int i = 0; i < count; i++)
+        elements[i] = list.begin()[i];
+}
+
+//vector existent + nr de elemnte 
+Sort::Sort(vector<int> vec, int elements_count)
+{
+    count = elements_count;
+    elements = new int[count];
+    for (int i = 0; i < count; i++)
+        elements[i] = vec[i];
+}
+
+//sortare in functie de ...
+Sort::Sort(int elements_count, ...)
+{
+    count    = elements_count;
+    elements = new int[count];
+
+    va_list args;
+    va_start(args, elements_count);
+    for (int i = 0; i < count; i++)
+        elements[i] = va_arg(args, int);
+    va_end(args);
+}
+
+//sortare dupa virgula + 1 element final
+Sort::Sort(string list)
+{
+    int virg = (int)std::count(list.begin(), list.end(), ',');
+    count    = virg + 1;
+    elements = new int[count];
+
+    //folosim stringstream, chit ca e altceva decat char
+    stringstream ss(list);
+    string token;
+    int idx = 0;
+
+    while (getline(ss, token, ','))
+        elements[idx++] = stoi(token);
+}
+
+// destruct
+Sort::~Sort()
+{
+    delete[] elements;
+}
+
+void Sort::BubbleSort(bool ascendent){
+    for (int i = 0; i < count - 1; i++)
+        for (int j = 0; j < count - i - 1; j++){
+            bool schimb = ascendent ? (elements[j] > elements[j + 1]) : (elements[j] < elements[j + 1]);
+            if (schimb)
+                swap(elements[j], elements[j + 1]);
+        }
+}
+
+void Sort::InsertSort(bool ascendent){
+    for (int i = 1; i < count; i++){
+        int key = elements[i];
+        int j   = i - 1;
+        while (j >= 0 && (ascendent ? elements[j] > key : elements[j] < key)){
+            elements[j + 1] = elements[j];
+            j--;
+        }
+        elements[j + 1] = key;
     }
 }
 
-Sort::Sort(initializer_list<int> list)
-{
-	this->elements_count = (int)list.size();
-    this->elements = new int[this->elements_count];
-
-	for(int i=0; i < elements_count; i++){
-		
-	}
+int Sort::Partition(int* arr, int low, int high, bool ascendent){
+    int pivot = arr[high];
+    int i     = low - 1;
+    for (int j = low; j < high; j++){
+        bool condition = ascendent ? (arr[j] <= pivot) : (arr[j] >= pivot);
+        if (condition){
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
 }
 
-Sort::Sort(string list)
-{
-	// count 
-	//	-> functie ce returneaza numarul de aparitii ale unei valori intr-un range
-	//	-> primeste 3 parametri: iterator catre primul, catre ultimul element din range si valoarea cautata
-	//	ex: count(list.begin(), list.end(), ',')
-	// https://www.geeksforgeeks.org/cpp/std-count-cpp-stl/
-	//
-	// container_type::iterator it -> obiect ce acceseaza elementele unui container.
-	// https://www.geeksforgeeks.org/cpp/iterators-c-stl/
-	for (string::iterator ch = list.begin(); ch < list.end(); ch++)
-	{
-
-	}
+void Sort::QuickSortHelper(int* arr, int low, int high, bool ascendent){
+    if (low < high){
+        int pi = Partition(arr, low, high, ascendent);
+        QuickSortHelper(arr, low,    pi - 1, ascendent);
+        QuickSortHelper(arr, pi + 1, high,   ascendent);
+    }
 }
 
-int main()
+void Sort::QuickSort(bool ascendent)
 {
-	// elemente random
-	Sort sort1 = Sort(5, 10, 50);
-	sort1.BubbleSort(true);
-	sort1.Print();
+    QuickSortHelper(elements, 0, count-1, ascendent);
+}
 
-	// lista de initializare
-	Sort sort2 = Sort({ 2, 6, 7, 9, 5, 4, 8, 6, 7, 10 });
-	sort2.QuickSort();
-	sort2.Print();
+void Sort::Print()
+{
+    printf("[ ");
+    for (int i = 0; i < count; i++)
+        printf("%d ", elements[i]);
+    printf("]\n");
+}
 
-	// vector
-	vector<int> numere = { 2, 6, 9, 7, 3, 6, 4, 8 };
-	Sort sort3 = Sort(numere, 8);
-	sort3.BubbleSort();
-	sort3.Print();
+int Sort::GetElementsCount()
+{
+    return count;
+}
 
-	// nr variabil de parametri
-	Sort sort4 = Sort(6, 5, 9, 7, 3, 6, 4);
-	sort4.InsertSort(true);
-	sort4.Print();
-
-	// string
-	Sort sort5 = Sort("10,40,100,5,70");
-	sort5.QuickSort(true);
-	sort5.Print();
-
-	printf("%d\n", sort5.GetElementsCount());
-	printf("%d", sort5.GetElementFromIndex(4));
+int Sort::GetElementFromIndex(int index)
+{
+    return elements[index];
 }
