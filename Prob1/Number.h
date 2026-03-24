@@ -10,34 +10,34 @@ private:
     int   base;
 
     long long   toDecimal() const;
-    void        fromDecimal(long long value, int newBase);
+    void fromDecimal(long long value, int newBase);
     static char digitToChar(int d);
     static int  charToDigit(char c);
 
 public:
-    // Constructori
+    // constr
     Number(const char* value, int base);
-    Number(long long value, int base = 10);   // pentru n4=12345 si n1=255
+    Number(long long value, int base = 10);   // pt n4=12345 si n1=255
     Number(const Number& other);              // copy
     Number(Number&& other) noexcept;          // move
-    ~Number();
+    ~Number(); //deconstr
 
-    // Operatori de atribuire
+    // pt atribuire
     Number& operator=(const Number& other);
     Number& operator=(Number&& other) noexcept;
     Number& operator=(long long value);       // n1 = 255
     Number& operator=(const char* value);     // n4 = "13579"
 
-    // Metode
+    // metode
     void SwitchBase(int newBase);
     void Print() const;
     int  GetDigitsCount() const;
     int  GetBase() const;
 
-    // Operator index
+    // pt index
     char operator[](int index) const;
 
-    // Operatori de comparatie
+    // pt comparatie
     bool operator>(const Number& other)  const;
     bool operator<(const Number& other)  const;
     bool operator>=(const Number& other) const;
@@ -45,14 +45,14 @@ public:
     bool operator==(const Number& other) const;
     bool operator!=(const Number& other) const;
 
-    // Operator --
-    Number& operator--();         // prefix  (sterge primul digit)
-    Number  operator--(int);      // postfix (sterge ultimul digit)
+    //pt operatori
+    Number& operator--(); // prefix (sterge primul digit)
+    Number  operator--(int); // postfix (sterge ultimul digit)
 
-    // Operator +=
+    // pt op +=
     Number& operator+=(const Number& other);
 
-    // Friend: adunare si scadere
+    //friend pt adunare/scadere
     friend Number operator+(const Number& a, const Number& b);
     friend Number operator-(const Number& a, const Number& b);
 };

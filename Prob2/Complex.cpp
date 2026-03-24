@@ -1,14 +1,14 @@
 #include "Complex.h"
 #include <bits/stdc++.h>
 
-// ─── Constructori ────────────────────────────────────────────────────────────
+using namespace std;
 
+//constr
 Complex::Complex() : real_data(0), imag_data(0) {}
 
 Complex::Complex(double real, double imag) : real_data(real), imag_data(imag) {}
 
-// ─── Metode ──────────────────────────────────────────────────────────────────
-
+//met
 bool Complex::is_real() const {
     return imag_data == 0;
 }
@@ -24,15 +24,14 @@ Complex Complex::conjugate() const {
     return Complex(real_data, -imag_data);
 }
 
-// op() - setter pentru real si imag, returneaza referinta (pentru chaining)
+// setam real si img, returnand referinta
 Complex& Complex::operator()(double real, double imag) {
     real_data = real;
     imag_data = imag;
     return *this;
 }
 
-// ─── op+ (9 variante: complex+complex, complex+real, real+complex) ───────────
-
+//mai multe variante pt op +
 Complex operator+(const Complex& l, const Complex& r) {
     return Complex(l.real() + r.real(), l.imag() + r.imag());
 }
@@ -45,8 +44,7 @@ Complex operator+(double l, const Complex& r) {
     return Complex(l + r.real(), r.imag());
 }
 
-// ─── op- (3 variante binare + 1 unar) ────────────────────────────────────────
-
+//la fel si pt op -
 Complex operator-(const Complex& l, const Complex& r) {
     return Complex(l.real() - r.real(), l.imag() - r.imag());
 }
@@ -59,13 +57,11 @@ Complex operator-(double l, const Complex& r) {
     return Complex(l - r.real(), -r.imag());
 }
 
-Complex operator-(const Complex& obj) {           // unar
+Complex operator-(const Complex& obj) { // unar
     return Complex(-obj.real(), -obj.imag());
 }
 
-// ─── op* (3 variante) ────────────────────────────────────────────────────────
 // (a+bi)(c+di) = ac-bd + (ad+bc)i
-
 Complex operator*(const Complex& l, const Complex& r) {
     return Complex(
         l.real() * r.real() - l.imag() * r.imag(),
@@ -81,8 +77,7 @@ Complex operator*(double l, const Complex& r) {
     return Complex(l * r.real(), l * r.imag());
 }
 
-// ─── op== si op!= ────────────────────────────────────────────────────────────
-
+//pt op == si !=
 bool operator==(const Complex& l, const Complex& r) {
     return l.real() == r.real() && l.imag() == r.imag();
 }
@@ -91,10 +86,8 @@ bool operator!=(const Complex& l, const Complex& r) {
     return !(l == r);
 }
 
-// ─── op<< ────────────────────────────────────────────────────────────────────
-// Format:  5 + 4i  |  -3 - 2i  |  -6  |  5i  |  0
-
-std::ostream& operator<<(std::ostream& out, const Complex& c) {
+//pt op <<
+ostream& operator<<(ostream& out, const Complex& c) {
     bool hasReal = c.real() != 0;
     bool hasImag = c.imag() != 0;
 
@@ -109,11 +102,11 @@ std::ostream& operator<<(std::ostream& out, const Complex& c) {
 
     if (hasImag) {
         if (hasReal) {
-            // scriem + sau - intre parti
+            // + sau - intre parti
             out << (c.imag() > 0 ? " + " : " - ");
-            out << std::abs(c.imag()) << "i";
+            out << abs(c.imag()) << "i";
         } else {
-            // doar partea imaginara
+            // pt imaginara
             out << c.imag() << "i";
         }
     }
@@ -121,31 +114,25 @@ std::ostream& operator<<(std::ostream& out, const Complex& c) {
     return out;
 }
 
-// ─── op++ si op-- ────────────────────────────────────────────────────────────
-// Incrementeaza/decrementeaza PARTEA REALA
-
-// prefix ++ : incrementeaza si returneaza referinta la obiectul modificat
+//pt partea reala de ++/--
 Complex& Complex::operator++() {
     real_data++;
-    return *this;
+    return *this; //returnam ref la obiectul modif
 }
 
-// postfix ++ : TREBUIE sa foloseasca prefix ++
 Complex Complex::operator++(int) {
-    Complex copy = *this;   // salvezi valoarea veche
-    ++(*this);              // folosesti prefix ++
-    return copy;            // returnezi valoarea veche
+    Complex copy = *this; //val veche
+    ++(*this);              
+    return copy; // returnam val veche
 }
 
-// prefix --
 Complex& Complex::operator--() {
     real_data--;
-    return *this;
+    return *this; // la fel pt partea reala la --
 }
 
-// postfix -- : TREBUIE sa foloseasca prefix --
 Complex Complex::operator--(int) {
     Complex copy = *this;
-    --(*this);              // folosesti prefix --
-    return copy;
+    --(*this);             
+    return copy; //la fel, copiem val veche
 }

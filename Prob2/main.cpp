@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 #include "Complex.h"
 
+using namespace std;
+
 bool double_equals(double l, double r) {
     return abs(l - r) < 0.001;
 }
@@ -54,8 +56,8 @@ int main() {
         //                          -3 - 2i
         //                          -6
         //                           5i
-        std::cout << f << '\n' << a << '\n';
-        std::cout << Complex{ 1, 2 } << '\n'
+        cout << f << '\n' << a << '\n';
+        cout << Complex{ 1, 2 } << '\n'
                   << Complex{ 1, -2 } << '\n'
                   << Complex{ 0, 5 } << '\n'
                   << Complex{ 7, 0 } << '\n'
