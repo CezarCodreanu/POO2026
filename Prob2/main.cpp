@@ -58,10 +58,10 @@ int main() {
         //                           5i
         cout << f << '\n' << a << '\n';
         cout << Complex{ 1, 2 } << '\n'
-                  << Complex{ 1, -2 } << '\n'
-                  << Complex{ 0, 5 } << '\n'
-                  << Complex{ 7, 0 } << '\n'
-                  << Complex{ 0, 0 } << '\n';
+            << Complex{ 1, -2 } << '\n'
+            << Complex{ 0, 5 } << '\n'
+            << Complex{ 7, 0 } << '\n'
+            << Complex{ 0, 0 } << '\n';
     }
 
     // op() will update the real part and the imaginary part
