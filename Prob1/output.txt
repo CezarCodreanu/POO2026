@@ -1,0 +1,9 @@
+apple => 3
+an => 2
+i => 2
+bought => 1
+eat => 1
+favorite => 1
+is => 1
+my => 1
+then => 1
