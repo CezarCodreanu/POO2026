@@ -19,7 +19,7 @@ int main()
     for (const char &ch : text) {
         if (separators.find(ch) != string::npos) {
             if (!word.empty()) {
-                words[word]++;
+                words[word]++; 
                 word.clear();
             }       
         }
